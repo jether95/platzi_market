@@ -11,11 +11,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-
 @Repository
-//@component - es una generalizacion de las notaciones de Spring data
 public class ProductoRepository implements ProductRepository {
-
     @Autowired
     private ProductoCrudRepository productoCrudRepository;
 
@@ -23,8 +20,8 @@ public class ProductoRepository implements ProductRepository {
     private ProductMapper mapper;
 
     @Override
-    public List<Product> getAll(){
-        List<Producto> productos = (List<Producto>)  productoCrudRepository.findAll();
+    public List<Product> getAll() {
+        List<Producto> productos = (List<Producto>) productoCrudRepository.findAll();
         return mapper.toProducts(productos);
     }
 
@@ -35,7 +32,7 @@ public class ProductoRepository implements ProductRepository {
     }
 
     @Override
-    public Optional<List<Product>> getScarseproduct(int quantity) {
+    public Optional<List<Product>> getScarseProducts(int quantity) {
         Optional<List<Producto>> productos = productoCrudRepository.findByCantidadStockLessThanAndEstado(quantity, true);
         return productos.map(prods -> mapper.toProducts(prods));
     }
@@ -43,21 +40,16 @@ public class ProductoRepository implements ProductRepository {
     @Override
     public Optional<Product> getProduct(int productId) {
         return productoCrudRepository.findById(productId).map(producto -> mapper.toProduct(producto));
-
     }
 
     @Override
     public Product save(Product product) {
         Producto producto = mapper.toProducto(product);
-
         return mapper.toProduct(productoCrudRepository.save(producto));
     }
 
     @Override
-    public void delete(int productId){
-
+    public void delete(int productId) {
         productoCrudRepository.deleteById(productId);
     }
-
-
 }
