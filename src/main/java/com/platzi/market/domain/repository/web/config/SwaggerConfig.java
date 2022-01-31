@@ -1,4 +1,4 @@
-package com.platzi.market.web.config;
+package com.platzi.market.domain.repository.web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
